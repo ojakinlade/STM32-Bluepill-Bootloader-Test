@@ -1,0 +1,23 @@
+#include "stm32f10x.h"                  // Device header
+#include <stdbool.h>
+#include "clocks.h"
+#include "gpio.h"
+#include "systick.h"
+
+
+int main(void)
+{
+	Clocks_Init();
+	SysTick_Init();
+	GPIO_Reset();
+	GPIO_OutputInit(GPIOC,GPIO_PORT_REG_HIGH, GPIO_PIN13_OUTPUT_MODE_2MHZ, GPIO_GEN_PUR_OUTPUT_PUSH_PULL);
+	
+	while(1)
+	{
+		GPIO_OutputWrite(GPIOC, GPIO_PIN13, false);
+		SysTick_DelayMs(1000);
+		GPIO_OutputWrite(GPIOC, GPIO_PIN13, true);
+		SysTick_DelayMs(1000);
+		
+	}
+}
